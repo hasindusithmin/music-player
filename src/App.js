@@ -18,6 +18,7 @@ function App() {
   const [singerbyletter, setsingerbyletter] = useState(null)
   const [shsingerbyletter, setshsingerbyletter] = useState(true)
   const [songsbysinger, setsongsbysinger] = useState(null)
+  const [songsbyletter, setsongsbyletter] = useState(null)
   useEffect(() => {
     const autoCompleteSongs = new autoComplete({
       selector: "#autocomplete-songs",
@@ -137,6 +138,20 @@ function App() {
       })
   }
 
+  const showSongs = (char) => {
+    fetch(`https://songapi.deta.dev/find-songsby-letter/${char}`)
+      .then(res => {
+        if (!res.ok) throw Error(res.statusText)
+        return res.json()
+      })
+      .then(data => {
+        setsongsbyletter(data)
+      })
+      .catch(error => {
+        console.error(error.message)
+      })
+  }
+
 
   return (
     <div className='w3-content w3-panel w3-center'>
@@ -144,7 +159,7 @@ function App() {
       <Header />
 
       {
-        !singerbyletter &&
+        !singerbyletter && !songsbyletter &&
         <div id='Home'>
           <img src={turntable} alt="turntable" className='w3-image' />
 
@@ -179,7 +194,7 @@ function App() {
 
           <SingersAlphabet showSingers={showSingers} />
 
-          <SongsAlphabet />
+          <SongsAlphabet showSongs={showSongs} />
 
           <Player songsList={songsList} date={Date.now()} />
         </div>
@@ -203,9 +218,31 @@ function App() {
       }
 
       {
+        songsbyletter &&
+        <>
+          <div className='w3-center' title='Click here to go home!' onClick={() => { setsongsbyletter(null) }}>
+            <BiHomeAlt className='w3-green' size={30} />
+          </div>
+          {
+            songsbyletter.map(({ song, singer, link }) => (
+              <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom' key={Math.random()}>
+
+                <div className="w3-center"><b>{singer}</b></div>
+
+                <h5>{song}</h5>
+
+                <audio controls preload="none" src={link}></audio>
+
+              </div>
+            ))
+          }
+        </>
+      }
+
+      {
         songsbysinger &&
         <>
-          <h3 className='w3-opacity w3-button w3-round-xlarge w3-light-grey' onClick={()=>{setsongsbysinger(null);setshsingerbyletter(true);}}><b>GO BACK</b></h3>
+          <h3 className='w3-opacity w3-button w3-round-xlarge w3-light-grey' onClick={() => { setsongsbysinger(null); setshsingerbyletter(true); }}><b>GO BACK</b></h3>
           {
             songsbysinger.map(({ song, singer, link }) => (
               <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom' key={Math.random()}>
