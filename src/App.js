@@ -4,12 +4,13 @@ import singers from "./singers.json"
 import autoComplete from "@tarekraafat/autocomplete.js";
 import Player from './components/Player.js';
 import Header from './components/Header';
+import turntable from './turntable.gif'
 
 function App() {
 
   const [song, setSong] = useState(null)
   const [singer, setSinger] = useState(null)
-  const [songsList,setSongsList] = useState([])
+  const [songsList, setSongsList] = useState([])
 
   useEffect(() => {
     const autoCompleteSongs = new autoComplete({
@@ -87,28 +88,34 @@ function App() {
     });
   }, [])
 
-  const searchSong = ()=>{
-    const songObj = songs.filter(obj=>obj['song'] === song)[0]
+  const searchSong = () => {
+    const songObj = songs.filter(obj => obj['song'] === song)[0]
     setSongsList([songObj])
   }
 
-  const searchSongsBySinger = async()=>{
-      try {
-        const res = await fetch(`https://songapi.deta.dev/find-songsby-singer/${singer}`)
-        const data = await res.json() 
-        if (data.length === 0) throw Error(`${singer} Not Found`)
-        setSongsList(data)
-      } catch (error) {
-        console.error(error.message)
-      }
+  const searchSongsBySinger = async () => {
+    try {
+      const res = await fetch(`https://songapi.deta.dev/find-songsby-singer/${singer}`)
+      const data = await res.json()
+      if (data.length === 0) throw Error(`${singer} Not Found`)
+      setSongsList(data)
+    } catch (error) {
+      console.error(error.message)
+    }
   }
 
 
   return (
     <div className='w3-content w3-panel w3-center'>
 
+      <Header />
 
-      <Header/>
+      <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
+        <img src={turntable} alt="turntable" className='w3-image'/>
+        <p className='w3-justify w3-serif w3-large'>
+          Welcome to Sinhala Jukebox, the ultimate destination for all your favorite Sinhala songs! Our extensive library of music features a wide range of genres and styles, from upbeat and energetic pop hits to mellow and romantic ballads. No matter what mood you're in, we've got the perfect song for you. Plus, with our easy-to-use interface and convenient download options, it's never been easier to access and enjoy your favorite Sinhala tunes. So why wait? Start listening and downloading today and experience the best in Sinhala music with Sinhala Jukebox!
+        </p>
+      </div>
 
       <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
         <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
@@ -128,7 +135,7 @@ function App() {
         </div>
       </div>
 
-      <Player songsList={songsList} date={Date.now()}/>
+      <Player songsList={songsList} date={Date.now()} />
 
     </div>
   );
