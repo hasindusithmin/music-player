@@ -76,30 +76,49 @@ function App() {
             const selection = event.detail.selection.value;
             setSinger(selection)
             autoCompleteSingers.input.value = selection;
+          },
+          focus: (event) => {
+            setSinger(null)
           }
         }
       }
     });
   }, [])
 
+  const searchSong = ()=>{
+    const songObj = songs.filter(obj=>obj['song'] === song)[0]
+    console.log(songObj);
+  }
+
+  const searchSongsBySinger = async()=>{
+      try {
+        const res = await fetch(`https://songapi.deta.dev/find-songsby-singer/${singer}`)
+        const data = await res.json() 
+        if (data.length === 0) throw Error(`${singer} Not Found`)
+        console.log(data);
+      } catch (error) {
+        console.error(error.message)
+      }
+  }
+
 
   return (
     <div className='w3-content w3-panel w3-center'>
-      
+
       <div className='w3-row w3-padding w3-border w3-round-large w3-card'>
         <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
         <div className='w3-half'>
           <div className="autoComplete_wrapper">
-            <input id="autocomplete-songs" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
-            <br/>
-            <button className='w3-button w3-margin w3-light-grey w3-round-large'>SEARCH</button>
+            <input id="autocomplete-songs" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="on" />
+            <br />
+            <button className='w3-button w3-margin w3-light-grey w3-round-large' onClick={searchSong}>SEARCH A SONG</button>
           </div>
         </div>
         <div className='w3-half'>
           <div className="autoComplete_wrapper">
-            <input id="autocomplete-singers" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
-            <br/>
-            <button className='w3-button w3-margin w3-light-grey w3-round-large'>SEARCH</button>
+            <input id="autocomplete-singers" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="on" />
+            <br />
+            <button className='w3-button w3-margin w3-light-grey w3-round-large' onClick={searchSongsBySinger}>SEARCH A SINGER</button>
           </div>
         </div>
       </div>
