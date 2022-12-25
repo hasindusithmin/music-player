@@ -6,6 +6,7 @@ import Player from './components/Player.js';
 import Header from './components/Header';
 import turntable from './turntable.gif'
 import AutoPlayer from './components/AutoPlayer';
+import SingersAlphabet from './components/SingersAlphabet';
 
 function App() {
 
@@ -136,6 +137,8 @@ function App() {
           </div>
         </div>
       </div>
+
+      <SingersAlphabet />
 
       {
         randomSongsList && songsList.length === 0 && <AutoPlayer songsList={randomSongsList} />
