@@ -7,6 +7,7 @@ import Header from './components/Header';
 import turntable from './turntable.gif'
 import AutoPlayer from './components/AutoPlayer';
 import SingersAlphabet from './components/SingersAlphabet';
+import SongsAlphabet from './components/SongsAlphabet';
 
 function App() {
 
@@ -120,6 +121,11 @@ function App() {
         </p>
       </div>
 
+      {
+        randomSongsList && songsList.length === 0 && <AutoPlayer songsList={randomSongsList} />
+      }
+
+
       <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
         <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
         <div className='w3-half'>
@@ -140,9 +146,7 @@ function App() {
 
       <SingersAlphabet />
 
-      {
-        randomSongsList && songsList.length === 0 && <AutoPlayer songsList={randomSongsList} />
-      }
+      <SongsAlphabet />
 
       <Player songsList={songsList} date={Date.now()} />
 
