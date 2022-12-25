@@ -173,7 +173,6 @@ function App() {
             randomSongsList && songsList.length === 0 && <AutoPlayer songsList={randomSongsList} />
           }
 
-
           <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
             <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
             <div className='w3-half'>
@@ -192,11 +191,12 @@ function App() {
             </div>
           </div>
 
+          <Player songsList={songsList} date={Date.now()} />
+
           <SingersAlphabet showSingers={showSingers} />
 
           <SongsAlphabet showSongs={showSongs} />
 
-          <Player songsList={songsList} date={Date.now()} />
         </div>
       }
 
