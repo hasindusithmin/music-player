@@ -3,26 +3,23 @@ import { useEffect, useState } from "react";
 import { GrCaretNext, GrCaretPrevious, GrStop,GrStopFill } from "react-icons/gr";
 
 
-export default function Player({ songsList, date }) {
+export default function AutoPlayer({ songsList}) {
 
     const [index, setIndex] = useState(0)
     const [stoped,setstoped] = useState(false)
 
     useEffect(() => {
-        if (songsList.length > 0) {
-            document.getElementById('singer').innerText = songsList[index]['singer']
-            document.querySelector('h5').innerText = songsList[index]['song']
-            document.querySelector('audio').src = songsList[index]['link']
-        }
-    }, [songsList.length, date])
-
-    useEffect(() => {
-        if (songsList.length > 0) {
-            document.getElementById('singer').innerText = songsList[index]['singer']
-            document.querySelector('h5').innerText = songsList[index]['song']
-            document.querySelector('audio').src = songsList[index]['link']
-        }
+        document.getElementById('singer').innerText = songsList[index]['singer']
+        document.querySelector('h5').innerText = songsList[index]['song']
+        document.querySelector('audio').src = songsList[index]['link']
     }, [index])
+
+    setTimeout(()=>{
+        let _ = index;
+        if (_ < 14) setIndex(_ + 1)
+        else setIndex(0)
+    },2500)
+
 
     const playPrevious = () => {
         if (index !== 0) setIndex(index - 1)
@@ -48,7 +45,8 @@ export default function Player({ songsList, date }) {
 
                     <h3 className="w3-opacity"><b>MUSIC PLAYER</b></h3>
 
-                    <div className="w3-center" id="singer"></div>
+                    <div className="w3-center" id="singer">
+                    </div>
 
                     <h5></h5>
 

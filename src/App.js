@@ -5,12 +5,14 @@ import autoComplete from "@tarekraafat/autocomplete.js";
 import Player from './components/Player.js';
 import Header from './components/Header';
 import turntable from './turntable.gif'
+import AutoPlayer from './components/AutoPlayer';
 
 function App() {
 
   const [song, setSong] = useState(null)
   const [singer, setSinger] = useState(null)
   const [songsList, setSongsList] = useState([])
+  const [randomSongsList, setRandomSongsList] = useState(() => Array.from({ length: 15 }, () => songs[Math.floor(Math.random() * 100)]))
 
   useEffect(() => {
     const autoCompleteSongs = new autoComplete({
@@ -110,8 +112,8 @@ function App() {
 
       <Header />
 
-      <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
-        <img src={turntable} alt="turntable" className='w3-image'/>
+      <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom w3-animate-left'>
+        <img src={turntable} alt="turntable" className='w3-image' />
         <p className='w3-justify w3-serif w3-large'>
           Welcome to Sinhala Jukebox, the ultimate destination for all your favorite Sinhala songs! Our extensive library of music features a wide range of genres and styles, from upbeat and energetic pop hits to mellow and romantic ballads. No matter what mood you're in, we've got the perfect song for you. Plus, with our easy-to-use interface and convenient download options, it's never been easier to access and enjoy your favorite Sinhala tunes. So why wait? Start listening and downloading today and experience the best in Sinhala music with Sinhala Jukebox!
         </p>
@@ -134,6 +136,10 @@ function App() {
           </div>
         </div>
       </div>
+
+      {
+        randomSongsList && songsList.length === 0 && <AutoPlayer songsList={randomSongsList} />
+      }
 
       <Player songsList={songsList} date={Date.now()} />
 
