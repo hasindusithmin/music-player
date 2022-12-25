@@ -56,16 +56,16 @@ export default function Player({ songsList, date }) {
 
                     <audio controls autoPlay></audio>
 
-                    <div className="w3-row w3-padding" style={{ width: '50%', margin: 'auto' }}>
-                        <div className="w3-third">
+                    <div className="w3-row w3-padding">
+                        <span >
                             {songsList.length > 1 ? <span className="w3-button w3-padding" onClick={playPrevious}><GrCaretPrevious style={{ verticalAlign: 'middle' }} /></span> : <span className="w3-text-white">.</span>}
-                        </div>
-                        <div className="w3-third">
+                        </span>
+                        <span >
                             <span className="w3-button" onClick={OnOff}>{stoped ? <GrStopFill style={{ verticalAlign: 'middle'}}/>:<GrStop style={{ verticalAlign: 'middle'}}/>}</span>
-                        </div>
-                        <div className="w3-third">
+                        </span>
+                        <span >
                             {songsList.length > 1 ? <span className="w3-button w3-padding" onClick={playNext}><GrCaretNext style={{ verticalAlign: 'middle' }} /></span> : <span className="w3-text-white">.</span>}
-                        </div>
+                        </span>
                     </div>
                 </div>
             }

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import songs from "./songs.json"
 import singers from "./singers.json"
 import autoComplete from "@tarekraafat/autocomplete.js";
-import Player from './Player';
+import Player from './components/Player.js';
+import Header from './components/Header';
 
 function App() {
 
@@ -105,6 +106,9 @@ function App() {
 
   return (
     <div className='w3-content w3-panel w3-center'>
+
+
+      <Header/>
 
       <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
         <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
