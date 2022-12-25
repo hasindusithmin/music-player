@@ -1,10 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import songs from "./songs.json"
 import singers from "./singers.json"
 import autoComplete from "@tarekraafat/autocomplete.js";
 
 
 function App() {
+
+  const [song, setSong] = useState(null)
+  const [singer, setSinger] = useState(null)
 
   useEffect(() => {
     const autoCompleteSongs = new autoComplete({
@@ -36,6 +39,7 @@ function App() {
         input: {
           selection: (event) => {
             const selection = event.detail.selection.value;
+            setSong(selection);
             autoCompleteSongs.input.value = selection;
           }
         }
@@ -70,6 +74,7 @@ function App() {
         input: {
           selection: (event) => {
             const selection = event.detail.selection.value;
+            setSinger(selection)
             autoCompleteSingers.input.value = selection;
           }
         }
@@ -80,18 +85,25 @@ function App() {
 
   return (
     <div className='w3-content w3-panel w3-center'>
-      <div className='w3-row'>
+      
+      <div className='w3-row w3-padding w3-border w3-round-large w3-card'>
+        <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
         <div className='w3-half'>
           <div className="autoComplete_wrapper">
             <input id="autocomplete-songs" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
+            <br/>
+            <button className='w3-button w3-margin w3-light-grey w3-round-large'>SEARCH</button>
           </div>
         </div>
         <div className='w3-half'>
           <div className="autoComplete_wrapper">
             <input id="autocomplete-singers" type="search" dir="ltr" spellCheck={false} autoCorrect="off" autoComplete="off" autoCapitalize="off" />
+            <br/>
+            <button className='w3-button w3-margin w3-light-grey w3-round-large'>SEARCH</button>
           </div>
         </div>
       </div>
+
     </div>
   );
 }
