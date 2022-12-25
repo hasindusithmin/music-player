@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import songs from "./songs.json"
 import singers from "./singers.json"
 import autoComplete from "@tarekraafat/autocomplete.js";
-
+import Player from './Player';
 
 function App() {
 
   const [song, setSong] = useState(null)
   const [singer, setSinger] = useState(null)
+  const [songsList,setSongsList] = useState([])
 
   useEffect(() => {
     const autoCompleteSongs = new autoComplete({
@@ -87,7 +88,7 @@ function App() {
 
   const searchSong = ()=>{
     const songObj = songs.filter(obj=>obj['song'] === song)[0]
-    console.log(songObj);
+    setSongsList([songObj])
   }
 
   const searchSongsBySinger = async()=>{
@@ -95,7 +96,7 @@ function App() {
         const res = await fetch(`https://songapi.deta.dev/find-songsby-singer/${singer}`)
         const data = await res.json() 
         if (data.length === 0) throw Error(`${singer} Not Found`)
-        console.log(data);
+        setSongsList(data)
       } catch (error) {
         console.error(error.message)
       }
@@ -105,7 +106,7 @@ function App() {
   return (
     <div className='w3-content w3-panel w3-center'>
 
-      <div className='w3-row w3-padding w3-border w3-round-large w3-card'>
+      <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
         <h3 className='w3-center w3-opacity'><b>QUICK ACCESS</b></h3>
         <div className='w3-half'>
           <div className="autoComplete_wrapper">
@@ -122,6 +123,8 @@ function App() {
           </div>
         </div>
       </div>
+
+      <Player songsList={songsList} date={Date.now()}/>
 
     </div>
   );
