@@ -41,7 +41,7 @@ export default function AutoPlayer({ songsList}) {
             {
                 songsList.length > 0
                 &&
-                <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom'>
+                <div className='w3-row w3-padding w3-border w3-round-large w3-card w3-margin-bottom w3-animate-bottom'>
 
                     <h3 className="w3-opacity"><b>MUSIC PLAYER</b></h3>
 
